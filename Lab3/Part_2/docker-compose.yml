@@ -1,0 +1,23 @@
+version: '3.10'
+
+services:
+  db:
+    image: postgres:14
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: mydatabase
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+  app:
+    build: app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+volumes:
+  db_data:
