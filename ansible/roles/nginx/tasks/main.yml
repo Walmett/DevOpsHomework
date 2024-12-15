@@ -1,0 +1,27 @@
+---
+- name: Install Nginx
+  apk:
+    name: nginx
+    state: present
+
+- name: Create directory
+  file:
+    path: /var/www/html/
+    state: directory
+    mode: '0755'
+
+- name: Copy Nginx.conf
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/conf.d/nginx.conf
+
+- name: Copy hello_world.html
+  template:
+    src: hello_world.html
+    dest: /var/www/html/index.html
+
+- name: Restart Nginx
+  service:
+    name: nginx
+    state: restarted
+  
