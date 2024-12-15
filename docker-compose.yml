@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  ansible:
+    build: .
+    volumes:
+      - ./ansible:/ansible
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - internal-net
+
+  app:
+    image: app_image
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - common-dir:/app
+    networks:
+      - internal-net
+      
+      
+networks:
+  internal-net:
+    name: internal-net
+    external: true
+
+volumes:
+  common-dir:
+    external: true
